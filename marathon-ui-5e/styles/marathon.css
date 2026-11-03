@@ -1,0 +1,857 @@
+@import url("https://fonts.googleapis.com/css2?family=Archivo:wdth,wght@62..125,400..900&family=JetBrains+Mono:wght@400;600;800&display=swap");
+
+/* ==========================================================================
+   RUNNER//UI — core Foundry VTT chrome
+   Graphic-realism: near-black surfaces, pure saturated signal colors,
+   hard edges, clipped corners, hazard stripes, halftone dither, barcodes.
+   ========================================================================== */
+
+:root {
+  /* Surfaces */
+  --mui-black: #08090a;
+  --mui-ink: #0e0f11;
+  --mui-panel: #15171a;
+  --mui-panel-2: #1d1f23;
+  --mui-panel-3: #272a30;
+  --mui-line: #3a3e46;
+  --mui-line-soft: #24272c;
+
+  /* Type colors */
+  --mui-bone: #ecebe3;
+  --mui-dim: #8e939c;
+  --mui-faint: #5b606a;
+
+  /* Signal colors (pure, saturated, used flat — never as gradients) */
+  --mui-acid: #c8ff00;
+  --mui-magenta: #ff2d95;
+  --mui-cyan: #00e5ff;
+  --mui-amber: #ffc400;
+  --mui-red: #ff3b2f;
+  --mui-violet: #8a4bff;
+
+  /* Active accent (switched by body[data-mui-accent]) */
+  --mui-accent: var(--mui-acid);
+  --mui-accent-ink: #08090a;
+  --mui-alt: var(--mui-magenta);
+
+  /* Type */
+  --mui-font-display: "Archivo", "Arial Narrow", "Helvetica Neue", Arial, sans-serif;
+  --mui-font-mono: "JetBrains Mono", "IBM Plex Mono", ui-monospace, Consolas, monospace;
+
+  /* Shape */
+  --mui-cut: 10px;
+  --mui-cut-sm: 6px;
+
+  /* ---- Foundry core variable overrides (v12 + v13) ---- */
+  --color-text-light-0: #ffffff;
+  --color-text-light-1: var(--mui-bone);
+  --color-text-light-2: #c9c8c0;
+  --color-text-light-3: var(--mui-dim);
+  --color-text-light-4: var(--mui-faint);
+  --color-text-light-5: var(--mui-faint);
+  --color-text-light-6: var(--mui-faint);
+  --color-text-light-7: var(--mui-faint);
+  --color-text-dark-1: var(--mui-black);
+  --color-text-dark-2: var(--mui-ink);
+  --color-text-dark-3: var(--mui-panel-2);
+  --color-text-dark-4: var(--mui-panel-3);
+  --color-text-dark-5: var(--mui-line);
+  --color-text-dark-6: var(--mui-dim);
+  --color-text-primary: var(--mui-bone);
+  --color-text-secondary: var(--mui-dim);
+  --color-text-emphasis: #ffffff;
+  --color-text-link: var(--mui-accent);
+  --color-text-hyperlink: var(--mui-accent);
+  --color-form-label: var(--mui-dim);
+  --color-form-hint: var(--mui-faint);
+  --color-underline-active: var(--mui-accent);
+  --color-underline-inactive: var(--mui-line);
+  --color-border-light-1: var(--mui-line);
+  --color-border-light-2: var(--mui-line);
+  --color-border-dark: var(--mui-black);
+  --color-border-dark-1: var(--mui-line);
+  --color-border-highlight: var(--mui-accent);
+  --color-border-highlight-alt: var(--mui-alt);
+  --color-shadow-primary: var(--mui-accent);
+  --color-shadow-highlight: var(--mui-accent);
+  --color-shadow-dark: #000;
+  --color-warm-1: var(--mui-ink);
+  --color-warm-2: var(--mui-panel);
+  --color-warm-3: var(--mui-panel-2);
+  --color-cool-3: var(--mui-panel);
+  --color-cool-4: var(--mui-panel-2);
+  --color-cool-5: var(--mui-ink);
+  --color-cool-5-75: rgb(14 15 17 / 90%);
+  --color-cool-5-90: rgb(14 15 17 / 96%);
+  --color-level-info: var(--mui-cyan);
+  --color-level-success: var(--mui-acid);
+  --color-level-warning: var(--mui-amber);
+  --color-level-error: var(--mui-red);
+  --background: var(--mui-panel);
+  --background-color: var(--mui-panel);
+  --button-background-color: var(--mui-panel-3);
+  --button-hover-background-color: var(--mui-accent);
+  --button-text-color: var(--mui-bone);
+  --button-hover-text-color: var(--mui-accent-ink);
+  --button-border-color: var(--mui-line);
+  --input-background-color: var(--mui-black);
+  --input-border-color: var(--mui-line);
+  --input-text-color: var(--mui-bone);
+  --input-focus-outline-color: var(--mui-accent);
+  --font-primary: var(--mui-font-display);
+  --font-mono: var(--mui-font-mono);
+  --font-size-11: 0.6875rem;
+  --font-size-12: 0.75rem;
+  --font-size-13: 0.8125rem;
+  --font-size-14: 0.875rem;
+}
+
+body[data-mui-accent="magenta"] { --mui-accent: var(--mui-magenta); --mui-alt: var(--mui-acid); --mui-accent-ink: #08090a; }
+body[data-mui-accent="cyan"]    { --mui-accent: var(--mui-cyan);    --mui-alt: var(--mui-magenta); --mui-accent-ink: #08090a; }
+body[data-mui-accent="amber"]   { --mui-accent: var(--mui-amber);   --mui-alt: var(--mui-cyan);    --mui-accent-ink: #08090a; }
+
+/* ---- Reusable patterns --------------------------------------------------- */
+body {
+  --mui-hazard: repeating-linear-gradient(
+    -45deg,
+    var(--mui-amber) 0 7px,
+    var(--mui-black) 7px 14px
+  );
+  --mui-halftone: radial-gradient(circle at center, rgb(255 255 255 / 9%) 0.9px, transparent 1.4px);
+  --mui-dither: repeating-conic-gradient(rgb(255 255 255 / 5%) 0% 25%, transparent 0% 50%);
+  --mui-grid:
+    linear-gradient(rgb(255 255 255 / 3.5%) 1px, transparent 1px),
+    linear-gradient(90deg, rgb(255 255 255 / 3.5%) 1px, transparent 1px);
+  /* Barcode: irregular bar widths built from stacked gradients */
+  --mui-barcode:
+    repeating-linear-gradient(90deg, var(--mui-bone) 0 2px, transparent 2px 5px, var(--mui-bone) 5px 6px, transparent 6px 10px, var(--mui-bone) 10px 13px, transparent 13px 15px);
+}
+
+/* ---- Base --------------------------------------------------------------- */
+body.mui {
+  background: var(--mui-black);
+  color: var(--mui-bone);
+  font-family: var(--mui-font-display);
+}
+
+body.mui .window-app,
+body.mui .app,
+body.mui #interface {
+  font-family: var(--mui-font-display);
+  color: var(--mui-bone);
+}
+
+body.mui .mui-mono,
+body.mui code,
+body.mui .notes,
+body.mui .hint,
+body.mui .form-group .hint,
+body.mui .document-id-link,
+body.mui .timestamp,
+body.mui .message-timestamp {
+  font-family: var(--mui-font-mono);
+  letter-spacing: 0.02em;
+}
+
+body.mui h1,
+body.mui h2,
+body.mui h3,
+body.mui h4 {
+  font-family: var(--mui-font-display);
+  font-weight: 800;
+  font-stretch: 85%;
+  letter-spacing: -0.01em;
+  color: var(--mui-bone);
+  text-shadow: none;
+  border-bottom: 0;
+}
+
+body.mui.mui-caps h1,
+body.mui.mui-caps h2,
+body.mui.mui-caps h3,
+body.mui.mui-caps h4,
+body.mui.mui-caps label,
+body.mui.mui-caps nav.tabs a,
+body.mui.mui-caps .tabs .item,
+body.mui.mui-caps button:not(.dice-total),
+body.mui.mui-caps .window-title,
+body.mui.mui-caps .directory-header .header-search input::placeholder {
+  text-transform: uppercase;
+  letter-spacing: 0.09em;
+}
+
+body.mui a,
+body.mui a.content-link {
+  color: var(--mui-accent);
+}
+body.mui a.content-link {
+  background: transparent;
+  border: 0;
+  border-bottom: 1px solid var(--mui-accent);
+  border-radius: 0;
+  padding: 0 2px;
+  font-family: var(--mui-font-mono);
+  font-size: 0.92em;
+}
+body.mui a.content-link:hover {
+  background: var(--mui-accent);
+  color: var(--mui-accent-ink);
+  text-shadow: none;
+}
+
+body.mui ::selection { background: var(--mui-accent); color: var(--mui-accent-ink); }
+
+/* ---- Scrollbars --------------------------------------------------------- */
+body.mui * { scrollbar-color: var(--mui-line) var(--mui-black); scrollbar-width: thin; }
+body.mui ::-webkit-scrollbar { width: 8px; height: 8px; }
+body.mui ::-webkit-scrollbar-track { background: var(--mui-black); }
+body.mui ::-webkit-scrollbar-thumb { background: var(--mui-line); border-radius: 0; border: 0; }
+body.mui ::-webkit-scrollbar-thumb:hover { background: var(--mui-accent); }
+
+/* ---- Windows ------------------------------------------------------------ */
+body.mui .window-app {
+  background: var(--mui-ink);
+  background-image: var(--mui-grid);
+  background-size: 24px 24px;
+  border: 1px solid var(--mui-line);
+  border-radius: 0;
+  box-shadow: 6px 6px 0 rgb(0 0 0 / 55%), 0 0 0 1px #000;
+  --background: var(--mui-ink);
+}
+
+/* Registration corner ticks */
+body.mui .window-app::after {
+  content: "";
+  position: absolute;
+  inset: -1px;
+  pointer-events: none;
+  z-index: 3;
+  background:
+    linear-gradient(var(--mui-accent), var(--mui-accent)) top left / 14px 2px no-repeat,
+    linear-gradient(var(--mui-accent), var(--mui-accent)) top left / 2px 14px no-repeat,
+    linear-gradient(var(--mui-accent), var(--mui-accent)) bottom right / 14px 2px no-repeat,
+    linear-gradient(var(--mui-accent), var(--mui-accent)) bottom right / 2px 14px no-repeat;
+}
+
+body.mui .window-header {
+  background: var(--mui-black);
+  border: 0;
+  border-bottom: 1px solid var(--mui-line);
+  border-radius: 0;
+  box-shadow: none;
+  position: relative;
+  min-height: 30px;
+}
+body.mui .window-header::before {
+  content: "";
+  position: absolute;
+  left: 0; top: 0; bottom: 0;
+  width: 6px;
+  background: var(--mui-accent);
+}
+body.mui.mui-hazard .window-header::after {
+  content: "";
+  position: absolute;
+  left: 0; right: 0; bottom: 0;
+  height: 3px;
+  background: var(--mui-hazard);
+  opacity: 0.85;
+  pointer-events: none;
+}
+body.mui .window-title {
+  font-family: var(--mui-font-mono);
+  font-weight: 800;
+  font-size: 0.78rem;
+  color: var(--mui-bone);
+  padding-left: 10px;
+}
+body.mui .window-header .header-control,
+body.mui .window-header button {
+  color: var(--mui-dim);
+  background: transparent;
+  border: 0;
+  border-radius: 0;
+  box-shadow: none;
+}
+body.mui .window-header .header-control:hover,
+body.mui .window-header button:hover {
+  background: var(--mui-accent);
+  color: var(--mui-accent-ink);
+}
+body.mui .window-header [data-action="close"]:hover { background: var(--mui-red); color: #000; }
+
+body.mui .window-content {
+  background: transparent;
+  color: var(--mui-bone);
+}
+body.mui .window-resize-handle { filter: grayscale(1) brightness(1.6); }
+
+/* ---- Buttons ------------------------------------------------------------ */
+body.mui button,
+body.mui .button,
+body.mui a.button {
+  background: var(--mui-panel-3);
+  color: var(--mui-bone);
+  border: 1px solid var(--mui-line);
+  border-radius: 0;
+  box-shadow: none;
+  font-family: var(--mui-font-display);
+  font-weight: 700;
+  font-size: 0.78rem;
+  text-shadow: none;
+  clip-path: polygon(0 0, calc(100% - var(--mui-cut-sm)) 0, 100% var(--mui-cut-sm), 100% 100%, var(--mui-cut-sm) 100%, 0 calc(100% - var(--mui-cut-sm)));
+  transition: background 80ms steps(2), color 80ms steps(2), transform 80ms steps(2);
+}
+body.mui button:hover,
+body.mui .button:hover,
+body.mui a.button:hover {
+  background: var(--mui-accent);
+  color: var(--mui-accent-ink);
+  border-color: var(--mui-accent);
+  box-shadow: none;
+  text-shadow: none;
+}
+body.mui button:active { transform: translate(1px, 1px); }
+body.mui button:focus-visible,
+body.mui input:focus-visible,
+body.mui select:focus-visible,
+body.mui textarea:focus-visible {
+  outline: 2px solid var(--mui-accent);
+  outline-offset: 1px;
+  box-shadow: none;
+}
+body.mui button.bright,
+body.mui button[type="submit"],
+body.mui .dialog-button.default,
+body.mui button.default {
+  background: var(--mui-accent);
+  color: var(--mui-accent-ink);
+  border-color: var(--mui-accent);
+}
+body.mui button.bright:hover,
+body.mui button[type="submit"]:hover,
+body.mui button.default:hover {
+  background: var(--mui-bone);
+  border-color: var(--mui-bone);
+  color: #000;
+}
+body.mui button:disabled { opacity: 0.35; filter: grayscale(1); }
+
+/* ---- Form controls ------------------------------------------------------ */
+body.mui input[type="text"],
+body.mui input[type="number"],
+body.mui input[type="search"],
+body.mui input[type="password"],
+body.mui input[type="email"],
+body.mui input[type="url"],
+body.mui select,
+body.mui textarea,
+body.mui .editor-content,
+body.mui prose-mirror {
+  background: var(--mui-black);
+  color: var(--mui-bone);
+  border: 1px solid var(--mui-line);
+  border-radius: 0;
+  box-shadow: none;
+  font-family: var(--mui-font-mono);
+  font-size: 0.82rem;
+}
+body.mui input:hover,
+body.mui select:hover,
+body.mui textarea:hover { border-color: var(--mui-dim); }
+body.mui input:focus,
+body.mui select:focus,
+body.mui textarea:focus { border-color: var(--mui-accent); box-shadow: none; }
+body.mui select option { background: var(--mui-black); color: var(--mui-bone); }
+body.mui input[type="checkbox"] { accent-color: var(--mui-accent); }
+body.mui input[type="range"] { accent-color: var(--mui-accent); }
+body.mui label,
+body.mui .form-group > label {
+  color: var(--mui-dim);
+  font-family: var(--mui-font-mono);
+  font-size: 0.7rem;
+  font-weight: 600;
+}
+body.mui hr {
+  border: 0;
+  height: 3px;
+  background: var(--mui-line);
+  background-image: var(--mui-barcode);
+  background-size: 15px 3px;
+  opacity: 0.55;
+}
+
+/* ---- Sidebar ------------------------------------------------------------ */
+body.mui #sidebar,
+body.mui #sidebar-content,
+body.mui .sidebar-tab,
+body.mui #sidebar .directory {
+  background: var(--mui-ink);
+  border-radius: 0;
+}
+body.mui #sidebar {
+  border: 0;
+  border-left: 2px solid var(--mui-accent);
+  box-shadow: -8px 0 0 rgb(0 0 0 / 40%);
+}
+body.mui #sidebar-tabs,
+body.mui #sidebar-tabs > .item,
+body.mui #sidebar-tabs menu {
+  background: var(--mui-black);
+  border-radius: 0;
+  border-color: var(--mui-line);
+}
+body.mui #sidebar-tabs .item {
+  color: var(--mui-dim);
+  border-radius: 0;
+  box-shadow: none;
+}
+body.mui #sidebar-tabs .item:hover { color: var(--mui-bone); background: var(--mui-panel-3); }
+body.mui #sidebar-tabs .item.active {
+  background: var(--mui-accent);
+  color: var(--mui-accent-ink);
+  box-shadow: none;
+}
+body.mui #sidebar-tabs .item.active i { color: var(--mui-accent-ink); }
+
+body.mui .directory-header,
+body.mui .directory .header-actions {
+  background: transparent;
+  border-bottom: 1px solid var(--mui-line);
+}
+body.mui .directory-item {
+  background: transparent;
+  border: 0;
+  border-bottom: 1px solid var(--mui-line-soft);
+  border-radius: 0;
+  box-shadow: none;
+}
+body.mui .directory-item:hover { background: var(--mui-panel-2); box-shadow: inset 3px 0 0 var(--mui-accent); }
+body.mui .directory-item .entry-name,
+body.mui .directory-item .entry-name a { font-weight: 700; color: var(--mui-bone); }
+body.mui .directory .folder > .folder-header {
+  background: var(--mui-panel-2);
+  border: 0;
+  border-left: 3px solid var(--mui-alt);
+  color: var(--mui-bone);
+  border-radius: 0;
+  text-shadow: none;
+}
+
+/* ---- Scene controls, navigation, hotbar, players ------------------------ */
+body.mui #scene-controls .scene-control,
+body.mui #scene-controls .control-tool,
+body.mui #scene-controls button,
+body.mui #scene-controls-layers button,
+body.mui #scene-controls-tools button {
+  background: var(--mui-black);
+  border: 1px solid var(--mui-line);
+  border-radius: 0;
+  color: var(--mui-dim);
+  box-shadow: none;
+  clip-path: none;
+}
+body.mui #scene-controls .active,
+body.mui #scene-controls button.active,
+body.mui #scene-controls button:hover {
+  background: var(--mui-accent);
+  border-color: var(--mui-accent);
+  color: var(--mui-accent-ink);
+  box-shadow: none;
+}
+
+body.mui #scene-navigation .scene-navigation-menu li.scene,
+body.mui #scene-navigation .scene,
+body.mui #scene-navigation .scene-name {
+  background: var(--mui-black);
+  border: 1px solid var(--mui-line);
+  border-radius: 0;
+  color: var(--mui-bone);
+  box-shadow: none;
+  font-family: var(--mui-font-mono);
+  text-transform: uppercase;
+  letter-spacing: 0.06em;
+  font-size: 0.72rem;
+}
+body.mui #scene-navigation .scene.active,
+body.mui #scene-navigation .scene.active .scene-name {
+  background: var(--mui-accent);
+  color: var(--mui-accent-ink);
+  border-color: var(--mui-accent);
+}
+
+body.mui #hotbar .macro,
+body.mui #hotbar #action-bar .slot,
+body.mui #hotbar .slot {
+  background: var(--mui-black);
+  border: 1px solid var(--mui-line);
+  border-radius: 0;
+  box-shadow: none;
+}
+body.mui #hotbar .macro:hover,
+body.mui #hotbar .slot:hover { border-color: var(--mui-accent); box-shadow: 0 0 0 1px var(--mui-accent); }
+body.mui #hotbar .macro-key {
+  background: var(--mui-accent);
+  color: var(--mui-accent-ink);
+  font-family: var(--mui-font-mono);
+  font-weight: 800;
+  border-radius: 0;
+  text-shadow: none;
+}
+body.mui #hotbar .bar-controls,
+body.mui #hotbar .page-control {
+  background: var(--mui-black);
+  border: 1px solid var(--mui-line);
+  border-radius: 0;
+  color: var(--mui-dim);
+}
+
+body.mui #players,
+body.mui #players-active {
+  background: var(--mui-black);
+  border: 1px solid var(--mui-line);
+  border-left: 3px solid var(--mui-accent);
+  border-radius: 0;
+  font-family: var(--mui-font-mono);
+  font-size: 0.72rem;
+  text-transform: uppercase;
+  letter-spacing: 0.05em;
+}
+
+/* ---- Chat --------------------------------------------------------------- */
+body.mui #chat,
+body.mui #chat-log,
+body.mui .chat-sidebar { background: var(--mui-ink); }
+body.mui .chat-message {
+  background: var(--mui-panel);
+  background-image: var(--mui-dither);
+  background-size: 4px 4px;
+  border: 1px solid var(--mui-line);
+  border-left: 4px solid var(--mui-accent);
+  border-radius: 0;
+  box-shadow: none;
+  color: var(--mui-bone);
+  clip-path: polygon(0 0, calc(100% - var(--mui-cut)) 0, 100% var(--mui-cut), 100% 100%, 0 100%);
+}
+body.mui .chat-message.whisper { border-left-color: var(--mui-cyan); }
+body.mui .chat-message.blind   { border-left-color: var(--mui-alt); }
+body.mui .chat-message.roll    { border-left-color: var(--mui-amber); }
+body.mui .chat-message .message-header {
+  background: var(--mui-black);
+  border: 0;
+  border-bottom: 1px solid var(--mui-line);
+  position: relative;
+}
+body.mui .chat-message .message-header::after {
+  content: attr(data-mui-id);
+  position: absolute;
+  right: 4px; bottom: -1px;
+  font-family: var(--mui-font-mono);
+  font-size: 0.55rem;
+  letter-spacing: 0.2em;
+  color: var(--mui-faint);
+  pointer-events: none;
+}
+body.mui .chat-message .message-sender {
+  font-family: var(--mui-font-display);
+  font-weight: 800;
+  font-stretch: 85%;
+  text-transform: uppercase;
+  letter-spacing: 0.06em;
+  color: var(--mui-bone);
+}
+body.mui .chat-message .message-timestamp { color: var(--mui-faint); font-size: 0.65rem; }
+body.mui .chat-message .message-content { background: transparent; color: var(--mui-bone); }
+
+/* Dice */
+body.mui .dice-roll .dice-formula,
+body.mui .dice-roll .dice-tooltip {
+  background: var(--mui-black);
+  border: 1px solid var(--mui-line);
+  border-radius: 0;
+  box-shadow: none;
+  font-family: var(--mui-font-mono);
+  color: var(--mui-dim);
+}
+body.mui .dice-roll .dice-total {
+  background: var(--mui-black);
+  border: 0;
+  border-left: 6px solid var(--mui-accent);
+  border-radius: 0;
+  box-shadow: none;
+  color: #fff;
+  font-family: var(--mui-font-display);
+  font-weight: 900;
+  font-stretch: 75%;
+  font-size: 1.6rem;
+  letter-spacing: -0.01em;
+}
+body.mui .dice-roll .dice-total.critical { color: var(--mui-black); background: var(--mui-acid); border-left-color: var(--mui-black); }
+body.mui .dice-roll .dice-total.fumble   { color: var(--mui-black); background: var(--mui-red);  border-left-color: var(--mui-black); }
+body.mui .dice-roll .dice-total.success  { border-left-color: var(--mui-acid); }
+body.mui .dice-roll .dice-total.failure  { border-left-color: var(--mui-red); }
+body.mui .dice-tooltip .dice li {
+  border-radius: 0;
+  background: var(--mui-panel-3);
+  color: var(--mui-bone);
+  border: 1px solid var(--mui-line);
+  filter: none;
+}
+body.mui .dice-tooltip .dice li.max { color: var(--mui-acid); border-color: var(--mui-acid); }
+body.mui .dice-tooltip .dice li.min { color: var(--mui-red); border-color: var(--mui-red); }
+
+body.mui #chat-message { border-radius: 0; }
+
+/* ---- Dialogs, menus, tooltips, notifications ---------------------------- */
+body.mui .dialog .dialog-buttons button { flex: 1; }
+body.mui #context-menu,
+body.mui .context-menu,
+body.mui #tooltip,
+body.mui .locked-tooltip,
+body.mui #tooltip.active {
+  background: var(--mui-black);
+  color: var(--mui-bone);
+  border: 1px solid var(--mui-accent);
+  border-radius: 0;
+  box-shadow: 4px 4px 0 rgb(0 0 0 / 60%);
+  font-family: var(--mui-font-mono);
+  font-size: 0.75rem;
+}
+body.mui #context-menu li,
+body.mui .context-menu li { background: transparent; color: var(--mui-bone); }
+body.mui #context-menu li:hover,
+body.mui .context-menu li:hover { background: var(--mui-accent); color: var(--mui-accent-ink); }
+
+body.mui #notifications .notification {
+  background: var(--mui-black);
+  border: 1px solid var(--mui-line);
+  border-left: 6px solid var(--mui-cyan);
+  border-radius: 0;
+  box-shadow: 4px 4px 0 rgb(0 0 0 / 60%);
+  color: var(--mui-bone);
+  font-family: var(--mui-font-mono);
+}
+body.mui #notifications .notification.warning { border-left-color: var(--mui-amber); }
+body.mui #notifications .notification.error   { border-left-color: var(--mui-red); }
+
+/* ---- Tabs (all windows) ------------------------------------------------- */
+body.mui nav.tabs,
+body.mui .tabs {
+  border-bottom: 1px solid var(--mui-line);
+  background: transparent;
+}
+body.mui nav.tabs a,
+body.mui nav.tabs button,
+body.mui .tabs .item {
+  color: var(--mui-dim);
+  background: transparent;
+  border: 0;
+  border-radius: 0;
+  clip-path: none;
+  font-family: var(--mui-font-mono);
+  font-weight: 600;
+  font-size: 0.72rem;
+}
+body.mui nav.tabs a:hover,
+body.mui nav.tabs button:hover,
+body.mui .tabs .item:hover { color: var(--mui-bone); background: var(--mui-panel-3); text-shadow: none; }
+body.mui nav.tabs a.active,
+body.mui nav.tabs button.active,
+body.mui .tabs .item.active {
+  color: var(--mui-accent-ink);
+  background: var(--mui-accent);
+  text-shadow: none;
+}
+
+/* ---- Textures (user setting) -------------------------------------------- */
+body.mui[data-mui-texture="halftone"] #sidebar-content,
+body.mui[data-mui-texture="halftone"] .window-content {
+  background-image: var(--mui-halftone);
+  background-size: 6px 6px;
+}
+body.mui[data-mui-texture="scanlines"]::after {
+  content: "";
+  position: fixed;
+  inset: 0;
+  z-index: 100000;
+  pointer-events: none;
+  background: repeating-linear-gradient(0deg, rgb(0 0 0 / 22%) 0 1px, transparent 1px 3px);
+  mix-blend-mode: multiply;
+}
+
+/* ---- Login / setup screens ---------------------------------------------- */
+body.mui #join-game,
+body.mui #setup,
+body.mui #setup-packages {
+  background: var(--mui-black);
+  background-image: var(--mui-grid);
+  background-size: 32px 32px;
+}
+body.mui #join-game-form,
+body.mui #join-game .form-header {
+  background: var(--mui-ink);
+  border: 1px solid var(--mui-accent);
+  border-radius: 0;
+  box-shadow: 8px 8px 0 rgb(0 0 0 / 60%);
+}
+body.mui #join-game-form h2 { border-left: 8px solid var(--mui-accent); padding-left: 10px; }
+
+/* ---- Reduced motion / low-power ----------------------------------------- */
+@media (prefers-reduced-motion: reduce) {
+  body.mui * { transition: none !important; animation: none !important; }
+}
+
+/* ==========================================================================
+   Foundry v12 (ApplicationV1) specifics
+   ========================================================================== */
+
+/* v12 draws windows/sidebar with denim texture images; strip them */
+body.mui .window-app,
+body.mui #sidebar,
+body.mui #sidebar-tabs,
+body.mui #sidebar .sidebar-tab,
+body.mui #players,
+body.mui #hotbar .bar-controls,
+body.mui #navigation #scene-list .scene {
+  background-image: none;
+}
+body.mui .window-app { background-image: var(--mui-grid); }
+
+/* Header buttons are <a> elements in v12 */
+body.mui .window-header a,
+body.mui .window-header .header-button {
+  color: var(--mui-dim);
+  background: transparent;
+  border: 0;
+  border-radius: 0;
+  clip-path: none;
+  text-shadow: none;
+  margin: 0;
+  padding: 0 6px;
+}
+body.mui .window-header a:hover,
+body.mui .window-header .header-button:hover {
+  background: var(--mui-accent);
+  color: var(--mui-accent-ink);
+  text-shadow: none;
+}
+body.mui .window-header a.close:hover { background: var(--mui-red); color: #000; }
+body.mui .window-header h4.window-title { margin: 0; flex: 1; overflow: hidden; text-overflow: ellipsis; }
+
+/* v12 window content wrappers */
+body.mui .window-app section.window-content { background: transparent; }
+body.mui .window-app .sheet-tabs,
+body.mui .window-app .tabs { border-color: var(--mui-line); }
+
+/* Scene controls (#controls) */
+body.mui #controls .scene-control,
+body.mui #controls .control-tool {
+  background: var(--mui-black);
+  border: 1px solid var(--mui-line);
+  border-radius: 0;
+  color: var(--mui-dim);
+  box-shadow: none;
+}
+body.mui #controls .scene-control.active,
+body.mui #controls .control-tool.active,
+body.mui #controls .scene-control:hover,
+body.mui #controls .control-tool:hover {
+  background: var(--mui-accent);
+  border-color: var(--mui-accent);
+  color: var(--mui-accent-ink);
+  box-shadow: none;
+  text-shadow: none;
+}
+body.mui #controls ol.sub-controls {
+  background: var(--mui-black);
+  border: 1px solid var(--mui-line);
+  border-left: 3px solid var(--mui-accent);
+  border-radius: 0;
+  box-shadow: none;
+}
+body.mui #controls .control-tool.toggle.active { background: var(--mui-alt); border-color: var(--mui-alt); }
+
+/* Scene navigation bar */
+body.mui #navigation #nav-toggle,
+body.mui #navigation #scene-list .scene,
+body.mui #navigation #scene-list .scene.nav-item {
+  background: var(--mui-black);
+  border: 1px solid var(--mui-line);
+  border-radius: 0;
+  color: var(--mui-bone);
+  box-shadow: none;
+  font-family: var(--mui-font-mono);
+  text-transform: uppercase;
+  letter-spacing: 0.06em;
+  font-size: 0.72rem;
+}
+body.mui #navigation #scene-list .scene.view,
+body.mui #navigation #scene-list .scene.active {
+  background: var(--mui-accent);
+  border-color: var(--mui-accent);
+  color: var(--mui-accent-ink);
+}
+body.mui #navigation #scene-list .scene a,
+body.mui #navigation #scene-list .scene.view a { color: inherit; text-shadow: none; }
+body.mui #navigation #scene-list .scene-players .scene-player {
+  border-radius: 0;
+  box-shadow: none;
+}
+
+/* Hotbar */
+body.mui #hotbar #macro-list .macro {
+  background: var(--mui-black);
+  border: 1px solid var(--mui-line);
+  border-radius: 0;
+  box-shadow: none;
+}
+body.mui #hotbar #macro-list .macro:hover {
+  border-color: var(--mui-accent);
+  box-shadow: 0 0 0 1px var(--mui-accent);
+}
+body.mui #hotbar #hotbar-controls-left,
+body.mui #hotbar #hotbar-controls-right,
+body.mui #hotbar .bar-controls {
+  background: var(--mui-black);
+  border: 1px solid var(--mui-line);
+  border-radius: 0;
+  box-shadow: none;
+  color: var(--mui-dim);
+}
+body.mui #hotbar .macro-key {
+  background: var(--mui-accent);
+  color: var(--mui-accent-ink);
+  border-radius: 0;
+  text-shadow: none;
+}
+
+/* Sidebar tab strip: v12 uses a.item inside nav */
+body.mui #sidebar-tabs > a.item,
+body.mui #sidebar-tabs a.item {
+  background: transparent;
+  color: var(--mui-dim);
+  border-radius: 0;
+  box-shadow: none;
+  text-shadow: none;
+}
+body.mui #sidebar-tabs a.item:hover { background: var(--mui-panel-3); color: var(--mui-bone); }
+body.mui #sidebar-tabs a.item.active {
+  background: var(--mui-accent);
+  color: var(--mui-accent-ink);
+  box-shadow: none;
+}
+body.mui #sidebar-tabs a.item.active i { color: var(--mui-accent-ink); }
+
+/* Directory lists in v12 */
+body.mui .directory-list .directory-item { background: transparent; border-radius: 0; }
+body.mui .directory-list .folder .folder-header {
+  background: var(--mui-panel-2);
+  border: 0;
+  border-left: 3px solid var(--mui-alt);
+  border-radius: 0;
+  text-shadow: none;
+}
+
+/* Dialogs (v12 are .window-app.dialog) */
+body.mui .window-app.dialog .dialog-buttons button { flex: 1; }
+body.mui .window-app.dialog .dialog-content { color: var(--mui-bone); }

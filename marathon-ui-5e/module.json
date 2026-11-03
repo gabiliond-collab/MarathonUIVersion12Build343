@@ -1,0 +1,58 @@
+{
+  "id": "marathon-ui-5e",
+  "title": "RUNNER//UI \u2014 Sci-Fi Interface for D&D 5e",
+  "description": "Replaces the fantasy parchment-and-gold look of Foundry VTT v12 and the D&D 5e system 4.x with a graphic-realism sci-fi interface: near-black panels, neon signal colors, hazard stripes, halftone/dither textures, barcode strips, clipped corners and tracked mono labels. Inspired by the art direction of Bungie's Marathon. Unofficial fan project; contains no Bungie assets.",
+  "version": "0.2.0",
+  "authors": [
+    {
+      "name": "RUNNER//UI contributors"
+    }
+  ],
+  "compatibility": {
+    "minimum": "12",
+    "verified": "12.343",
+    "maximum": "12"
+  },
+  "relationships": {
+    "systems": [
+      {
+        "id": "dnd5e",
+        "type": "system",
+        "compatibility": {
+          "minimum": "4.0.0",
+          "verified": "4.4.4",
+          "maximum": "4.4.4"
+        }
+      }
+    ]
+  },
+  "esmodules": [
+    "scripts/main.js"
+  ],
+  "styles": [
+    "styles/marathon.css",
+    "styles/marathon-dnd5e.css"
+  ],
+  "languages": [
+    {
+      "lang": "en",
+      "name": "English",
+      "path": "lang/en.json"
+    }
+  ],
+  "flags": {
+    "hotReload": {
+      "extensions": [
+        "css",
+        "json"
+      ],
+      "paths": [
+        "styles",
+        "lang"
+      ]
+    }
+  },
+  "url": "",
+  "manifest": "",
+  "download": ""
+}

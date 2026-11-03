@@ -1,0 +1,376 @@
+/* ==========================================================================
+   RUNNER//UI — D&D 5e system layer (written against dnd5e 4.x sheets)
+   Swaps parchment / gold / crimson for black / bone / neon signal colors.
+   ========================================================================== */
+
+body.mui {
+  /* dnd5e palette variables */
+  --dnd5e-color-gold: var(--mui-accent);
+  --dnd5e-color-gold-rgb: 200 255 0;
+  --dnd5e-color-parchment: var(--mui-panel);
+  --dnd5e-color-parchment-rgb: 21 23 26;
+  --dnd5e-color-black: var(--mui-black);
+  --dnd5e-color-blue-gray: var(--mui-dim);
+  --dnd5e-color-light-gray: var(--mui-line);
+  --dnd5e-color-gray: var(--mui-dim);
+  --dnd5e-color-dark-gray: var(--mui-panel-3);
+  --dnd5e-color-faint-gray: var(--mui-line-soft);
+  --dnd5e-color-maroon: var(--mui-magenta);
+  --dnd5e-color-maroon-rgb: 255 45 149;
+  --dnd5e-color-dark-maroon: #b3175f;
+  --dnd5e-color-light-maroon: var(--mui-magenta);
+  --dnd5e-color-green: var(--mui-acid);
+  --dnd5e-color-blue: var(--mui-cyan);
+  --dnd5e-color-red: var(--mui-red);
+  --dnd5e-color-orange: var(--mui-amber);
+  --dnd5e-color-fire-orange: var(--mui-amber);
+  --dnd5e-color-card: var(--mui-panel);
+  --dnd5e-background-card: var(--mui-panel);
+  --dnd5e-background-25: rgb(255 255 255 / 4%);
+  --dnd5e-background-10: rgb(255 255 255 / 2%);
+  --dnd5e-border-gold: var(--mui-accent);
+  --dnd5e-border-groove: var(--mui-line);
+  --dnd5e-shadow-45: 0 0 0 transparent;
+  --dnd5e-font-roboto: var(--mui-font-display);
+  --dnd5e-font-roboto-condensed: var(--mui-font-display);
+  --dnd5e-font-modesto: var(--mui-font-display);
+  --dnd5e-font-roboto-slab: var(--mui-font-mono);
+  --dnd5e-font-modesto-condensed: var(--mui-font-display);
+  --dnd5e-font-modesto-bold: var(--mui-font-display);
+}
+
+/* ---- Sheet shell -------------------------------------------------------- */
+body.mui .dnd5e2.sheet,
+body.mui .dnd5e2.window-app,
+body.mui .dnd5e2 .window-content,
+body.mui .dnd5e.sheet,
+body.mui .dnd5e .window-content {
+  background-color: var(--mui-ink);
+  background-blend-mode: normal;
+  color: var(--mui-bone);
+}
+/* Kill the fantasy backdrop images (parchment, filigree, compendium art) */
+body.mui .dnd5e2 .window-content,
+body.mui .dnd5e2.sheet .sheet-header,
+body.mui .dnd5e2 .sheet-body,
+body.mui .dnd5e2 .sheet-header,
+body.mui .dnd5e2 .sheet-header::before,
+body.mui .dnd5e2 .sheet-body::before {
+  background-image: none;
+}
+body.mui[data-mui-texture="halftone"] .dnd5e2 .window-content { background-image: var(--mui-halftone); background-size: 6px 6px; }
+
+body.mui .dnd5e2.sheet .window-header {
+  background: var(--mui-black);
+  color: var(--mui-bone);
+}
+body.mui .dnd5e2 .sheet-header {
+  background-color: var(--mui-panel);
+  border-bottom: 2px solid var(--mui-accent);
+  border-radius: 0;
+}
+body.mui .dnd5e2 .sheet-header .document-name,
+body.mui .dnd5e2 .sheet-header h1,
+body.mui .dnd5e2 .sheet-header input.document-name {
+  font-family: var(--mui-font-display);
+  font-weight: 900;
+  font-stretch: 70%;
+  font-size: 1.9rem;
+  letter-spacing: -0.01em;
+  text-transform: uppercase;
+  color: #fff;
+  border-bottom: 0;
+  text-shadow: none;
+}
+body.mui .dnd5e2 .sheet-header .sheet-header-buttons button,
+body.mui .dnd5e2 .sheet-header .sheet-header-buttons a { color: var(--mui-dim); background: transparent; }
+body.mui .dnd5e2 .sheet-header .sheet-header-buttons button:hover { color: var(--mui-accent-ink); background: var(--mui-accent); }
+
+/* Portrait: harsh duotone-ish treatment so any fantasy art reads sci-fi */
+body.mui .dnd5e2 .portrait img,
+body.mui .dnd5e2 img.profile,
+body.mui .dnd5e2 .sheet-header img[data-edit="img"] {
+  border: 2px solid var(--mui-accent);
+  border-radius: 0;
+  clip-path: polygon(0 0, calc(100% - 14px) 0, 100% 14px, 100% 100%, 14px 100%, 0 calc(100% - 14px));
+  filter: grayscale(0.65) contrast(1.15);
+  box-shadow: none;
+}
+body.mui .dnd5e2 .portrait img:hover,
+body.mui .dnd5e2 img.profile:hover { filter: none; }
+
+/* ---- Sheet tabs --------------------------------------------------------- */
+body.mui .dnd5e2 nav.tabs,
+body.mui .dnd5e2 .tab-bar,
+body.mui .dnd5e2 .sheet-navigation {
+  background: var(--mui-black);
+  border: 0;
+  border-bottom: 1px solid var(--mui-line);
+}
+body.mui .dnd5e2 nav.tabs .item,
+body.mui .dnd5e2 nav.tabs a,
+body.mui .dnd5e2 nav.tabs button {
+  color: var(--mui-dim);
+  background: transparent;
+  border-radius: 0;
+  box-shadow: none;
+}
+body.mui .dnd5e2 nav.tabs .item.active,
+body.mui .dnd5e2 nav.tabs a.active,
+body.mui .dnd5e2 nav.tabs button.active {
+  color: var(--mui-accent-ink);
+  background: var(--mui-accent);
+}
+
+/* ---- Cards / panels / headings inside sheets ---------------------------- */
+body.mui .dnd5e2 .card,
+body.mui .dnd5e2 .sheet-body .card,
+body.mui .dnd5e2 .items-section,
+body.mui .dnd5e2 .items-list,
+body.mui .dnd5e2 .item-list,
+body.mui .dnd5e2 .stats .stat,
+body.mui .dnd5e2 .sidebar .card {
+  background: var(--mui-panel);
+  border: 1px solid var(--mui-line);
+  border-radius: 0;
+  box-shadow: none;
+}
+body.mui .dnd5e2 .items-header,
+body.mui .dnd5e2 .items-section > .items-header,
+body.mui .dnd5e2 .item-list-header,
+body.mui .dnd5e2 .card .header,
+body.mui .dnd5e2 .card-header {
+  background: var(--mui-black);
+  border: 0;
+  border-left: 4px solid var(--mui-alt);
+  border-radius: 0;
+  color: var(--mui-bone);
+}
+body.mui .dnd5e2 .items-header h3,
+body.mui .dnd5e2 .item-list-header h3,
+body.mui .dnd5e2 h3 {
+  font-family: var(--mui-font-mono);
+  font-weight: 800;
+  font-size: 0.78rem;
+  font-stretch: 100%;
+  color: var(--mui-bone);
+  border: 0;
+}
+body.mui .dnd5e2 .item,
+body.mui .dnd5e2 .item-row {
+  background: transparent;
+  border: 0;
+  border-bottom: 1px solid var(--mui-line-soft);
+  border-radius: 0;
+}
+body.mui .dnd5e2 .item:hover,
+body.mui .dnd5e2 .item-row:hover { background: var(--mui-panel-2); box-shadow: inset 3px 0 0 var(--mui-accent); }
+body.mui .dnd5e2 .item-name .name,
+body.mui .dnd5e2 .item .name { font-weight: 700; color: var(--mui-bone); }
+body.mui .dnd5e2 .item-name .subtitle,
+body.mui .dnd5e2 .subtitle { font-family: var(--mui-font-mono); color: var(--mui-dim); font-size: 0.68rem; }
+
+/* ---- Ability scores ----------------------------------------------------- */
+body.mui .dnd5e2 .ability-scores .ability-score,
+body.mui .dnd5e2 .ability-score {
+  background: var(--mui-black);
+  border: 1px solid var(--mui-line);
+  border-radius: 0;
+  box-shadow: none;
+  clip-path: polygon(0 0, calc(100% - var(--mui-cut)) 0, 100% var(--mui-cut), 100% 100%, 0 100%);
+}
+body.mui .dnd5e2 .ability-score:hover { border-color: var(--mui-accent); }
+body.mui .dnd5e2 .ability-score .mod,
+body.mui .dnd5e2 .ability-score .ability-mod,
+body.mui .dnd5e2 .ability-score .score {
+  font-family: var(--mui-font-display);
+  font-weight: 900;
+  font-stretch: 70%;
+  color: #fff;
+}
+body.mui .dnd5e2 .ability-score .mod { font-size: 1.7rem; }
+body.mui .dnd5e2 .ability-score .label,
+body.mui .dnd5e2 .ability-score .ability-name,
+body.mui .dnd5e2 .ability-score .config-button {
+  font-family: var(--mui-font-mono);
+  color: var(--mui-dim);
+  font-size: 0.65rem;
+  text-transform: uppercase;
+  letter-spacing: 0.12em;
+}
+body.mui .dnd5e2 .ability-score.proficient { border-color: var(--mui-accent); box-shadow: inset 0 -3px 0 var(--mui-accent); }
+body.mui .dnd5e2 .ability-score.proficient .label { color: var(--mui-accent); }
+
+/* ---- Meters (HP, XP, charges) ------------------------------------------- */
+body.mui .dnd5e2 .meter,
+body.mui .dnd5e2 .progress {
+  background: var(--mui-black);
+  border: 1px solid var(--mui-line);
+  border-radius: 0;
+  box-shadow: none;
+}
+body.mui .dnd5e2 .meter > .progress,
+body.mui .dnd5e2 .meter.hit-points > .progress,
+body.mui .dnd5e2 .progress::before {
+  background: var(--mui-accent);
+  border-radius: 0;
+  box-shadow: none;
+}
+body.mui .dnd5e2 .meter.hit-points > .progress.low,
+body.mui .dnd5e2 .meter.hit-points .progress[data-low="true"] {
+  background: repeating-linear-gradient(-45deg, var(--mui-red) 0 7px, var(--mui-black) 7px 14px);
+}
+body.mui .dnd5e2 .meter.hit-points > .temp,
+body.mui .dnd5e2 .meter .temp { background: var(--mui-cyan); }
+body.mui .dnd5e2 .meter .label,
+body.mui .dnd5e2 .meter .label .value,
+body.mui .dnd5e2 .meter .label .max,
+body.mui .dnd5e2 .meter input {
+  font-family: var(--mui-font-mono);
+  font-weight: 800;
+  color: #fff;
+  mix-blend-mode: difference;
+}
+
+/* ---- Pills, tags, badges, rollables ------------------------------------- */
+body.mui .dnd5e2 .pill,
+body.mui .dnd5e2 .tag,
+body.mui .dnd5e2 .pills .pill,
+body.mui .dnd5e2 .tags .tag,
+body.mui .dnd5e2 .pill-lg {
+  background: var(--mui-black);
+  color: var(--mui-bone);
+  border: 1px solid var(--mui-line);
+  border-radius: 0;
+  box-shadow: none;
+  font-family: var(--mui-font-mono);
+  font-size: 0.68rem;
+  text-transform: uppercase;
+  letter-spacing: 0.06em;
+}
+body.mui .dnd5e2 .pill:hover,
+body.mui .dnd5e2 .rollable:hover,
+body.mui .dnd5e2 [data-action="roll"]:hover,
+body.mui .dnd5e2 .rollable:hover .label {
+  color: var(--mui-accent);
+  text-shadow: none;
+  border-color: var(--mui-accent);
+}
+body.mui .dnd5e2 .proficiency-toggle,
+body.mui .dnd5e2 .proficiency-icon { color: var(--mui-accent); }
+
+/* Spell level, slots, concentration */
+body.mui .dnd5e2 .spell-slots .pip,
+body.mui .dnd5e2 .pips .pip,
+body.mui .dnd5e2 .slot-pip {
+  border-radius: 0;
+  border: 1px solid var(--mui-accent);
+  background: transparent;
+  transform: rotate(45deg) scale(0.8);
+}
+body.mui .dnd5e2 .spell-slots .pip.filled,
+body.mui .dnd5e2 .pips .pip.filled,
+body.mui .dnd5e2 .slot-pip.filled { background: var(--mui-accent); }
+body.mui .dnd5e2 .concentration,
+body.mui .dnd5e2 .item.concentrating { box-shadow: inset 3px 0 0 var(--mui-cyan); }
+
+/* Rarity colors map onto signal palette */
+body.mui .dnd5e2 .rarity-uncommon, body.mui .dnd5e2 [data-rarity="uncommon"] { color: var(--mui-acid); }
+body.mui .dnd5e2 .rarity-rare, body.mui .dnd5e2 [data-rarity="rare"] { color: var(--mui-cyan); }
+body.mui .dnd5e2 .rarity-veryRare, body.mui .dnd5e2 [data-rarity="veryRare"] { color: var(--mui-violet); }
+body.mui .dnd5e2 .rarity-legendary, body.mui .dnd5e2 [data-rarity="legendary"] { color: var(--mui-amber); }
+body.mui .dnd5e2 .rarity-artifact, body.mui .dnd5e2 [data-rarity="artifact"] { color: var(--mui-magenta); }
+
+/* Conditions / warnings use hazard stripe */
+body.mui.mui-hazard .dnd5e2 .condition.active,
+body.mui.mui-hazard .dnd5e2 .effect.condition,
+body.mui.mui-hazard .dnd5e2 .exhaustion.active {
+  background-image: var(--mui-hazard);
+  background-repeat: repeat-x;
+  background-position: bottom;
+  background-size: 28px 3px;
+}
+
+/* ---- Rich text / description blocks ------------------------------------- */
+body.mui .dnd5e2 .editor-content,
+body.mui .dnd5e2 .item-description,
+body.mui .dnd5e2 .description,
+body.mui .dnd5e2 .prosemirror {
+  color: var(--mui-bone);
+  font-family: var(--mui-font-display);
+  font-size: 0.92rem;
+  line-height: 1.5;
+}
+body.mui .dnd5e2 .editor-content h1,
+body.mui .dnd5e2 .editor-content h2,
+body.mui .dnd5e2 .editor-content h3 {
+  border-bottom: 0;
+  border-left: 4px solid var(--mui-accent);
+  padding-left: 8px;
+  text-transform: uppercase;
+  font-size: 1rem;
+}
+body.mui .dnd5e2 .editor-content table,
+body.mui .dnd5e2 table {
+  border: 1px solid var(--mui-line);
+  border-radius: 0;
+  background: transparent;
+}
+body.mui .dnd5e2 table th,
+body.mui .dnd5e2 .editor-content th {
+  background: var(--mui-black);
+  color: var(--mui-accent);
+  font-family: var(--mui-font-mono);
+  text-transform: uppercase;
+  letter-spacing: 0.08em;
+  font-size: 0.7rem;
+}
+body.mui .dnd5e2 table tr:nth-child(even) td { background: rgb(255 255 255 / 3%); }
+body.mui .dnd5e2 blockquote,
+body.mui .dnd5e2 .editor-content blockquote,
+body.mui .dnd5e2 .editor-content .boxed-text,
+body.mui .dnd5e2 .editor-content aside {
+  background: var(--mui-black);
+  border: 1px solid var(--mui-line);
+  border-left: 4px solid var(--mui-alt);
+  border-radius: 0;
+  box-shadow: none;
+  color: var(--mui-bone);
+}
+
+/* ---- Chat cards --------------------------------------------------------- */
+body.mui .dnd5e2.chat-card,
+body.mui .dnd5e2 .chat-card {
+  background: transparent;
+  border: 0;
+  border-radius: 0;
+  box-shadow: none;
+}
+body.mui .dnd5e2.chat-card .card-header,
+body.mui .dnd5e2.chat-card header.summary {
+  background: var(--mui-black);
+  border: 0;
+  border-bottom: 1px solid var(--mui-line);
+  border-radius: 0;
+  color: var(--mui-bone);
+}
+body.mui .dnd5e2.chat-card .card-header .name,
+body.mui .dnd5e2.chat-card header.summary .name {
+  font-family: var(--mui-font-display);
+  font-weight: 900;
+  font-stretch: 75%;
+  text-transform: uppercase;
+  letter-spacing: 0.02em;
+}
+body.mui .dnd5e2.chat-card .card-buttons button,
+body.mui .dnd5e2.chat-card .card-footer button,
+body.mui .dnd5e2.chat-card [data-action] { border-radius: 0; }
+body.mui .dnd5e2.chat-card .dice-roll .dice-total.critical { box-shadow: none; }
+
+/* ---- Compendium / item sheets ------------------------------------------- */
+body.mui .dnd5e2.sheet.item .sheet-body,
+body.mui .dnd5e2.sheet.item .sheet-header {
+  background-color: var(--mui-panel);
+}
+body.mui .dnd5e2 .tab[data-tab] { background: transparent; }
+body.mui .dnd5e2 .window-content::-webkit-scrollbar-thumb { background: var(--mui-line); }

@@ -1,0 +1,17 @@
+{
+  "MUI.Settings.Accent.Name": "Signal Color",
+  "MUI.Settings.Accent.Hint": "Primary accent used for active tabs, buttons, focus rings and highlights. Applies only to you.",
+  "MUI.Settings.Accent.acid": "Acid Green",
+  "MUI.Settings.Accent.magenta": "Hot Magenta",
+  "MUI.Settings.Accent.cyan": "Electric Cyan",
+  "MUI.Settings.Accent.amber": "Hazard Amber",
+  "MUI.Settings.Texture.Name": "Surface Texture",
+  "MUI.Settings.Texture.Hint": "Overlay pattern drawn on panels. Choose 'None' on low-powered devices.",
+  "MUI.Settings.Texture.halftone": "Halftone Dots",
+  "MUI.Settings.Texture.scanlines": "Scanlines",
+  "MUI.Settings.Texture.none": "None",
+  "MUI.Settings.Hazard.Name": "Hazard Stripes",
+  "MUI.Settings.Hazard.Hint": "Show diagonal hazard striping on window headers and warning states.",
+  "MUI.Settings.Caps.Name": "Uppercase Labels",
+  "MUI.Settings.Caps.Hint": "Render headings, tabs and buttons in tracked uppercase."
+}
